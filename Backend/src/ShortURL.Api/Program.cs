@@ -18,6 +18,8 @@ namespace ShortURL.Api
             builder.Services.AddControllers().AddFluentValidation(); ;
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwagger();
+            builder.Services.AddCustomCors();
+
 
             var app = builder.Build();
 
@@ -27,6 +29,8 @@ namespace ShortURL.Api
 
             app.UseSwagger();
             app.UseSwaggerUI();
+
+            if (builder.Environment.IsDevelopment()) app.UseCors("DevPolicy");
 
             app.MapControllers();
 

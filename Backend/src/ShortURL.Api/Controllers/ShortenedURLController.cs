@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ShortURL.Api.Requests;
 using ShortURL.Domain.ShortenedURLs.Commands;
 using ShortURL.Domain.ShortenedURLs.Queries;
 
@@ -39,9 +40,9 @@ namespace ShortURL.Api.Controllers
         /// <returns>The id of created short url.</returns>
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
-        public async Task<IActionResult> CreateShortenedURL([FromForm]string originalURL)
+        public async Task<IActionResult> CreateShortenedURL(CreateShortenedURLRequest request)
         {
-            var shortenedURL = await Mediator.Send(new CreateShortenedURLCommand {OriginalURL = originalURL});
+            var shortenedURL = await Mediator.Send(new CreateShortenedURLCommand {OriginalURL = request.LongUrl});
             return Ok(shortenedURL);
         }
     }
